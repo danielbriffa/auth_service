@@ -36,4 +36,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    
+     /**
+     * Find the user instance for the given username.
+     *
+     * @param  string  $username
+     * @return \App\User
+     */
+    public function findForPassport($username)
+    {
+        switch(env('LARAVEL_PASSPORT_LOGIN_FIELD_CRITERIA'))
+        {
+            case 'phone_number':
+                return $this->where('phone_number', $username)->first();
+                break;
+            case 'username':
+                return $this->where('username', $username)->first();
+                break;
+            case 'email':
+            default:
+                return $this->where('email', $username)->first();
+                break;
+        }        
+    }
 }
