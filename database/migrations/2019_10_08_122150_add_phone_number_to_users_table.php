@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UsersTableInsertColumnPhoneNumber extends Migration
+class AddPhoneNumberToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,7 @@ class UsersTableInsertColumnPhoneNumber extends Migration
      */
     public function up()
     {
-        Schema::table('users', function($table)
-        {
+        Schema::table('users', function (Blueprint $table) {
             $table->string('phone_number')->after('name');
         });
     }
@@ -26,7 +25,7 @@ class UsersTableInsertColumnPhoneNumber extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('phone_number');
         });
     }
