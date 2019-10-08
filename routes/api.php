@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+#Socialiate login routings
+Route::get('login/github', 'Auth\LoginController@redirectToProvider', 'github');
+Route::get('login/facebook', 'Auth\LoginController@redirectToProvider', 'facebook');

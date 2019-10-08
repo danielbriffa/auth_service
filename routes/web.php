@@ -11,6 +11,12 @@
 |
 */
 
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
+
+#Socialite callback routings (called by third parties)
+Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback', 'github');
+Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback', 'facebook');
