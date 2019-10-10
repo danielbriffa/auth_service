@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
 
         //Expose passport routing endpoints
         Passport::routes(); 
-        Passport::tokensExpireIn(now()->addDays('LARAVEL_PASSPORT_TOKEN_EXPIRY_DAYS'));
+        Passport::tokensExpireIn(now()->addDays(env('LARAVEL_PASSPORT_TOKEN_EXPIRY_DAYS')));
         Passport::refreshTokensExpireIn(now()->addDays(env('LARAVEL_PASSPORT_REFRESH_TOKEN_EXPIRY_DAYS')));
     }
 }
