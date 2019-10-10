@@ -13,9 +13,9 @@ class CreateUsersDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_data', function (Blueprint $table) {
+        Schema::create('user_data', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
-            $table->json('user_data');
+            $table->json('data');
             $table->timestamps();
 
             $table->foreign('user_id')
