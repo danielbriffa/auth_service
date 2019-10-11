@@ -23,8 +23,7 @@ class UserDataShowRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //'field' => 'required'
+        return [            
         ];
     }
 }

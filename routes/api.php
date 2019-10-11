@@ -32,10 +32,10 @@ Route::middleware('auth:api')->group(
         Route::delete('/user/meta/{key}', 'API\V1\UserDataController@destroy');
 
         //add field value to key
-        Route::put('/user/meta/{key}/{value}', 'API\V1\UserDataController@addValue');
+        Route::put('/user/meta/{key}', 'API\V1\UserDataController@addValue');
 
         //delete field value from key
-        Route::delete('/user/meta/{key}/{value}', 'API\V1\UserDataController@deleteValue');
+        Route::delete('/user/meta/{key}', 'API\V1\UserDataController@deleteValue');
         
     }
 );

@@ -23,8 +23,7 @@ class UserDataDeleteRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //'key' => 'required'
+        return [            
         ];
     }
 }

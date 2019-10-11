@@ -24,8 +24,7 @@ class UserDataUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //'key' => 'required',
-            //'value' => 'required'
+            'value' => 'required'
         ];
     }
 }
