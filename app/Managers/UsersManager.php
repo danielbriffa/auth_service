@@ -12,14 +12,14 @@ class UsersManager {
         return User::where('id', $_user_id)->first();
     }
 
-    function getUserDataObject($_user_id)
+    function getUserDataByUserID($_user_id)
     {
         return  UserData::where('user_id', $_user_id)->first();
     }
 
     function getUserDataAll($_user_id) 
     {
-        $user_data = $this->getUserDataObject($_user_id);
+        $user_data = $this->getUserDataByUserID($_user_id);
 
         return $user_data->data ?: null;
     }
@@ -39,7 +39,7 @@ class UsersManager {
 
     function insertUserDataValueByKey($_user_id, $_key, $_value) 
     {
-        $user_data = $this->getUserDataObject($_user_id); 
+        $user_data = $this->getUserDataByUserID($_user_id); 
     
         //user exists? and data object exists ?
         if ($user_data !== null && isset($user_data->data))
@@ -65,7 +65,7 @@ class UsersManager {
 
     function removeUserDataValueByKey($_user_id, $_key, $_value) 
     {   
-        $user_data = $this->getUserDataObject($_user_id); 
+        $user_data = $this->getUserDataByUserID($_user_id); 
 
         //user exists? and data object exists ?
         if ($user_data !== null && isset($user_data->data))
@@ -85,7 +85,7 @@ class UsersManager {
     function removeUserDataByKey($_user_id, $_key) 
     {
         //get fields of user        
-        $user_data = $this->getUserDataObject($_user_id); 
+        $user_data = $this->getUserDataByUserID($_user_id); 
 
         if ($user_data !== null && isset($user_data->data))
         {
