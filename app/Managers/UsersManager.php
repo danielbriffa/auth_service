@@ -9,12 +9,12 @@ class UsersManager {
 
     function getUserByID($_user_id) 
     {
-        return User::where('id', $_user_id)->first();
+        return User::where('id', $_user_id)->firstOrFail();
     }
 
     function getUserDataByUserID($_user_id)
     {
-        return  UserData::where('user_id', $_user_id)->first();
+        return  UserData::where('user_id', $_user_id)->firstOrFail();
     }
 
     function getUserDataAll($_user_id) 
@@ -27,7 +27,7 @@ class UsersManager {
     function getUserDataByKey($_user_id, $_key) 
     {
         //get fields of user        
-        $user_data = $this->getUserDataAll($_user_id); 
+        $user_data = $this->getUserDataAll($_user_id);         
 
         if ($user_data !== null)
         {
@@ -40,21 +40,29 @@ class UsersManager {
     function insertUserDataValueByKey($_user_id, $_key, $_value) 
     {
         $user_data = $this->getUserDataByUserID($_user_id); 
-    
+
+        if (!isset($user_data->data))
+        {
+            //Throw Error - Error retrieving user or data object
+        }
+
+        $data = $user_data->data;
         //user exists? and data object exists ?
-        if ($user_data !== null && isset($user_data->data))
+        if ($data !== null && isset($data))
         {
             //if key does not exist, create it
-            if (!isset($user_data->data[$_key]))
+            if (!isset($data[$_key]))
             {
-                $user_data->data[$_key] = [];
+                $data[$_key] = [];
             }
-            
+
             //insert value only if it does not exist
-            if (!array_search($_value, $user_data->data[$_key]))
+            if (!array_search($_value, $data[$_key]))
             {
-                array_push($user_data->data[$_key], $_value); 
+                array_push($data[$_key], $_value); 
             }
+
+            $user_data->data = $data;
 
             return $user_data->save();
             
@@ -65,16 +73,32 @@ class UsersManager {
 
     function removeUserDataValueByKey($_user_id, $_key, $_value) 
     {   
-        $user_data = $this->getUserDataByUserID($_user_id); 
-
-        //user exists? and data object exists ?
-        if ($user_data !== null && isset($user_data->data))
+        $user_data = $this->getUserDataByUserID($_user_id);
+        
+        if (!isset($user_data->data))
         {
-            if (($key = array_search($_value, $response[$_key])) !== false) {
-                unset($user_data->data[$_key][$key]);
+            //Throw Error - Error retrieving user or data object
+        }
+        
+        $data = $user_data->data;
+        //user exists? and data object exists ?
+        if ($data !== null && isset($data))
+        {
+            if ($data[$_key])
+            {
+                //Throw Error - Key does not exist
             }
 
-            return $user_data->save();
+            if (($key = array_search($_value, $data[$_key])) !== false) {
+                unset($data[$_key][$key]); 
+
+                $user_data->data = $data;
+                
+                return $user_data->save();
+            }
+            
+            //in case the value is not found, still return success.
+            return true;
             
         }
 
@@ -87,13 +111,26 @@ class UsersManager {
         //get fields of user        
         $user_data = $this->getUserDataByUserID($_user_id); 
 
-        if ($user_data !== null && isset($user_data->data))
+        if (!isset($user_data->data))
+        {
+            //Throw Error - Error retrieving user or data object
+        }
+
+        $data = $user_data->data;
+        if ($data !== null && isset($data))
         {
 
-            if(isset($user_data->data[$_key]))
+            if ($data[$_key])
             {
-                unset($user_data->data[$_key]);
+                //Throw Error - Key does not exist
             }
+
+            if(isset($data[$_key]))
+            {
+                unset($data[$_key]);
+            }
+
+            $user_data->data = $data;
 
             return $user_data->save();            
         }
