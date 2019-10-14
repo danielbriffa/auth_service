@@ -5,6 +5,9 @@ namespace App\Managers;
 use App\UserData;
 use App\User;
 
+use App\Exceptions\UserDataObjectNotFoundException;
+use App\Exceptions\KeyDoesNotExistException;
+
 class UsersManager {
 
     function getUserByID($_user_id) 
@@ -44,6 +47,7 @@ class UsersManager {
         if (!isset($user_data->data))
         {
             //Throw Error - Error retrieving user or data object
+            throw new UserDataObjectNotFoundException();
         }
 
         $data = $user_data->data;
@@ -78,15 +82,17 @@ class UsersManager {
         if (!isset($user_data->data))
         {
             //Throw Error - Error retrieving user or data object
+            throw new UserDataObjectNotFoundException();
         }
         
         $data = $user_data->data;
         //user exists? and data object exists ?
         if ($data !== null && isset($data))
         {
-            if ($data[$_key])
+            if (!isset($data[$_key]))
             {
                 //Throw Error - Key does not exist
+                throw new KeyDoesNotExistException();
             }
 
             if (($key = array_search($_value, $data[$_key])) !== false) {
@@ -114,6 +120,7 @@ class UsersManager {
         if (!isset($user_data->data))
         {
             //Throw Error - Error retrieving user or data object
+            throw new UserDataObjectNotFoundException();
         }
 
         $data = $user_data->data;
@@ -123,6 +130,7 @@ class UsersManager {
             if ($data[$_key])
             {
                 //Throw Error - Key does not exist
+                throw new KeyDoesNotExistException();
             }
 
             if(isset($data[$_key]))
