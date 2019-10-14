@@ -17,6 +17,10 @@ Route::get('/', function () {
 });
 */
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 #Socialite callback routings (called by third parties)
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback', 'github');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback', 'facebook');
